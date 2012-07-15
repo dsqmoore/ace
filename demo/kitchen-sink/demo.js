@@ -168,7 +168,6 @@ function makeHuge(txt) {
 }
 
 var docs = {
-    "docs/c9search.c9search_results": "C9 Search Results",
     "docs/javascript.js": "JavaScript",
     "docs/plaintext.txt": {name: "Plain Text", prepare: makeHuge, wrapped: true},
     "docs/coffeescript.coffee": "Coffeescript",
@@ -207,7 +206,8 @@ var docs = {
     "docs/sql.sql": {name: "SQL", wrapped: true},
     "docs/pgsql.pgsql": {name: "pgSQL", wrapped: true},
     "docs/golang.go": "Go",
-    "docs/jsx.jsx": "JSX"
+    "docs/jsx.jsx": "JSX",
+    "docs/c9search.c9search_results": "C9 Search Results"
 }
 
 var ownSource = {
@@ -284,7 +284,7 @@ env.editor.commands.addCommands([{
     name: "gotoline",
     bindKey: {win: "Ctrl-L", mac: "Command-L"},
     exec: function(editor, line) {
-        if (typeof needle == "object") {
+        if (typeof line == "object") {
             var arg = this.name + " " + editor.getCursorPosition().row;
             editor.cmdLine.setValue(arg, 1)
             editor.cmdLine.focus()
@@ -326,7 +326,7 @@ cmdLine.commands.bindKeys({
     },
 })
 
-cmdLine.commands.removeCommands(["find", "goToLine", "findAll", "replace", "replaceAll"])
+cmdLine.commands.removeCommands(["find", "gotoline", "findall", "replace", "replaceall"])
 
 /**
  * This demonstrates how you can define commands and bind shortcuts to them.
@@ -553,6 +553,10 @@ bindCheckbox("highlight_active", function(checked) {
 
 bindCheckbox("show_hidden", function(checked) {
     env.editor.setShowInvisibles(checked);
+});
+
+bindCheckbox("display_indent_guides", function(checked) {
+    env.editor.setDisplayIndentGuides(checked);
 });
 
 bindCheckbox("show_gutter", function(checked) {
